@@ -21,15 +21,15 @@ async function main() {
 
   // console.log("Greeter deployed to:", greeter.address);
 
-  const addVerifier = await hre.ethers.getContractFactory(
-    "contracts/AddVerifier.sol:Verifier"
-  );
-  const addContract = await addVerifier.deploy();
-  await addContract.deployed();
-  console.log("Add Verifier deployed to:", addContract.address);
+  // const addVerifier = await hre.ethers.getContractFactory(
+  //   "contracts/AddVerifier.sol:Verifier"
+  // );
+  // const addContract = await addVerifier.deploy();
+  // await addContract.deployed();
+  // console.log("Add Verifier deployed to:", addContract.address);
 
   const multiplyVerifier = await hre.ethers.getContractFactory(
-    "contracts/AddVerifier.sol:Verifier"
+    "contracts/MultiplyVerifier.sol:Verifier"
   );
   const multiplyContract = await multiplyVerifier.deploy();
   await multiplyContract.deployed();

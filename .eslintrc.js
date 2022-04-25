@@ -1,4 +1,5 @@
 module.exports = {
+  parser: "babel-eslint",
   env: {
     browser: false,
     es2021: true,
@@ -12,6 +13,8 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 12,
+    sourceType: "module",
+    allowImportExportEverywhere: true
   },
   overrides: [
     {

@@ -1,8 +1,9 @@
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import React from "react";
-import { addCalldata } from "../utils/zk";
+import { addCalldata, multiplyCalldata } from "../utils/zk";
 import addresses from "../utils/addresses.json";
-import addAbi from "../utils/abis/Verifier.json";
+import addAbi from "../utils/abis/AddVerifier.json";
+import multiplyAbi from "../utils/abis/MultiplyVerifier.json";
 import {
   useAccount,
   useConnect,
@@ -12,7 +13,6 @@ import {
   useNetwork,
   useDisconnect,
 } from "wagmi";
-import { connect } from "@wagmi/core";
 
 function Home() {
   const [a, setA] = React.useState(-1);
@@ -22,14 +22,33 @@ function Home() {
 
   const [shouldShow, setShouldShow] = React.useState(false);
 
-  const MIN = 1;
-  const MAX = 50;
+  const MIN = 2;
+  const MAX = 20;
+  const OP = ["+", "-", "*", "/"];
   const generate = async () => {
+    const temp = (Math.floor(Math.random() * (MAX - MIN + 1)) + MIN) % 4;
+    setOp(OP[temp]);
+
     const a = Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
     const b = Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
-    setA(a);
-    setB(b);
-    setOp("+");
+
+    switch (OP[temp]) {
+      case "+":
+      case "*":
+        setA(a);
+        setB(b);
+        break;
+
+      case "-":
+        setA(Math.max(a, b));
+        setB(Math.min(a, b));
+        break;
+
+      case "/":
+        setA(a * b);
+        setB(a);
+        break;
+    }
   };
 
   React.useEffect(() => {
@@ -43,22 +62,52 @@ function Home() {
   }, [a, b]);
 
   const submit = async () => {
-    console.log(c);
-    const calldata = await addCalldata(a, b, c);
-    
-    if (calldata) {
-      let result = await contract.verifyProof(
-        calldata[0],
-        calldata[1],
-        calldata[2],
-        calldata[3]
-      );
+    let calldata;
+    switch (op) {
+      case "+":
+        calldata = await addCalldata(a, b, c);
+        break;
 
-      console.log(result);
+      case "-":
+        calldata = await addCalldata(b, c, a);
+        break;
+
+      case "*":
+        calldata = await multiplyCalldata(a, b, c);
+        break;
+
+      case "/":
+        calldata = await multiplyCalldata(b, c, a);
+        break;
     }
 
-    // let finalData = await result.wait();
-    // console.log(finalData);
+    if (calldata) {
+      let result;
+      if (op === "+" || op === "-") {
+        console.log('At add!');
+        result = await addContract.verifyProof(
+          calldata[0],
+          calldata[1],
+          calldata[2],
+          calldata[3]
+        );
+      } else if (op === "*" || op === "/") {
+        console.log('At multiply!');
+        result = await multiplyContract.verifyProof(
+          calldata[0],
+          calldata[1],
+          calldata[2],
+          calldata[3]
+        );
+      }
+
+      console.log('RESULT: ', result);
+
+      if (result) {
+        setC("");
+        generate();
+      }
+    }
   };
 
   const {
@@ -84,15 +133,27 @@ function Home() {
 
   const provider = useProvider();
 
-  const contract = useContract({
+  const addContract = useContract({
     addressOrName: addresses.addContract,
     contractInterface: addAbi,
     signerOrProvider: signerData || provider,
   });
 
-  const contractNoSigner = useContract({
+  const addContractNoSigner = useContract({
     addressOrName: addresses.addContract,
     contractInterface: addAbi,
+    signerOrProvider: provider,
+  });
+
+  const multiplyContract = useContract({
+    addressOrName: addresses.multiplyContract,
+    contractInterface: multiplyAbi,
+    signerOrProvider: signerData || provider,
+  });
+
+  const multiplyContractNoSigner = useContract({
+    addressOrName: addresses.multiplyContract,
+    contractInterface: multiplyAbi,
     signerOrProvider: provider,
   });
 
@@ -120,11 +181,13 @@ function Home() {
               textAlign="center"
               ml={2}
               w="60px"
+              value={c === -1 ? "" : c}
               onChange={(v) => {
                 try {
                   setC(parseInt(v.target.value));
                 } catch (err) {}
               }}
+              type="number"
             ></Input>
           )}
           {shouldShow && (

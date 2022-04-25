@@ -76,3 +76,26 @@ export async function addCalldata(a, b, c) {
 
   return dataResult;
 }
+
+export async function multiplyCalldata(a, b, c) {
+  const input = {
+    a, b, c
+  };
+
+  console.log(input);
+
+  let dataResult;
+
+  try {
+    dataResult = await exportCallDataGroth16(
+      input,
+      "/zkUtil/multiply.wasm",
+      "/zkUtil/multiply_0001.zkey"
+    );
+  } catch (error) {
+    // console.log(error);
+    window.alert("Wrong answer");
+  }
+
+  return dataResult;
+}
