@@ -44,9 +44,8 @@ function Home() {
 
   const submit = async () => {
     console.log(c);
-    const calldata = await addCalldata(2, 5, 7);
-
-    console.log(calldata);
+    const calldata = await addCalldata(a, b, c);
+    
     if (calldata) {
       let result = await contract.verifyProof(
         calldata[0],

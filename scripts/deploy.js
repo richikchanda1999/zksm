@@ -21,12 +21,19 @@ async function main() {
 
   // console.log("Greeter deployed to:", greeter.address);
 
-  const verifier = await hre.ethers.getContractFactory("Verifier");
-  const contract = await verifier.deploy();
+  const addVerifier = await hre.ethers.getContractFactory(
+    "contracts/AddVerifier.sol:Verifier"
+  );
+  const addContract = await addVerifier.deploy();
+  await addContract.deployed();
+  console.log("Add Verifier deployed to:", addContract.address);
 
-  await contract.deployed();
-
-  console.log("Verifier deployed to:", contract.address);
+  const multiplyVerifier = await hre.ethers.getContractFactory(
+    "contracts/AddVerifier.sol:Verifier"
+  );
+  const multiplyContract = await multiplyVerifier.deploy();
+  await multiplyContract.deployed();
+  console.log("Multiply Verifier deployed to:", multiplyContract.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
