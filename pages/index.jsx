@@ -117,7 +117,7 @@ function Home() {
     generate();
   };
 
-  const { connect, connectors } = useConnect();
+  const { connectAsync, connectors } = useConnect();
   const { data: accountData, isError, isLoading } = useAccount();
   const { disconnect } = useDisconnect();
 
@@ -178,12 +178,12 @@ function Home() {
           bg: "gray.100",
         }}
         mb={accountData ? 10 : 0}
-        onClick={() => {
+        onClick={async () => {
           if (accountData) disconnect();
           else {
-            connect(connectors[0]);
             const time = new Date();
             time.setSeconds(time.getSeconds() + 60);
+            await connectAsync(connectors[0]);
             restart(time);
             setIsCompleted(false);
             setSolved(0);
@@ -215,11 +215,11 @@ function Home() {
               onClick={() => {
                 const time = new Date();
                 time.setSeconds(time.getSeconds() + 10);
-                restart(time);
                 setIsCompleted(false);
                 setSolved(0);
                 setTotal(0);
                 setC("");
+                restart(time);
               }}
             >
               Restart
