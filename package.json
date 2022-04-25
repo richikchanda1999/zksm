@@ -15,8 +15,9 @@
     "add": "^2.0.6",
     "framer-motion": "^6",
     "next": "12.1.5",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-timer-hook": "^3.0.5",
     "snarkjs": "^0.4.15",
     "wagmi": "^0.3.0",
     "yarn": "^1.22.18"

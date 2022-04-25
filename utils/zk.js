@@ -59,8 +59,6 @@ export async function addCalldata(a, b, c) {
     a, b, c
   };
 
-  console.log(input);
-
   let dataResult;
 
   try {
@@ -70,8 +68,7 @@ export async function addCalldata(a, b, c) {
       "/zkUtil/add_0001.zkey"
     );
   } catch (error) {
-    // console.log(error);
-    window.alert("Wrong answer");
+    return false;
   }
 
   return dataResult;
@@ -82,8 +79,6 @@ export async function multiplyCalldata(a, b, c) {
     a, b, c
   };
 
-  console.log(input);
-
   let dataResult;
 
   try {
@@ -93,8 +88,7 @@ export async function multiplyCalldata(a, b, c) {
       "/zkUtil/multiply_0001.zkey"
     );
   } catch (error) {
-    // console.log(error);
-    window.alert("Wrong answer");
+    return false;
   }
 
   return dataResult;
