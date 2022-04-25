@@ -183,7 +183,7 @@ function Home() {
           else {
             connect(connectors[0]);
             const time = new Date();
-            time.setSeconds(time.getSeconds() + 10);
+            time.setSeconds(time.getSeconds() + 60);
             restart(time);
             setIsCompleted(false);
             setSolved(0);
