@@ -249,7 +249,12 @@ function Home() {
           )}
         </Flex>
       )}
-      {accountData && !isCompleted && <Text>{seconds} seconds left!</Text>}
+      <Flex direction="row" align="center" mt={4}>
+        {accountData && !isCompleted && (
+          <Text>{seconds} seconds left!</Text>
+        )}
+        {accountData && !isCompleted && (<Text ml={10}>Score: {solved} / {total}</Text>)}
+      </Flex>
     </Flex>
   );
 }
