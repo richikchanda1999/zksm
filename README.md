@@ -1,42 +1,24 @@
-# Advanced Sample Hardhat Project
+# Zero Knowledge Speed Math
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+This is a mental math game where players are presented with simple arithmetic calculations to solve.
+The more the player can solve the greater the score they obtain!
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+## Structure of the Project
 
-Try running some of the following tasks:
+The project has mainly three components:
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.js
-node scripts/deploy.js
-npx eslint '**/*.js'
-npx eslint '**/*.js' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
-```
+1. Circuits - This part of the project is responsible for the creation of the `circom` circuits. These circuits are at the core of this game and differentiates it from other available games.
 
-# Etherscan verification
+2. Contracts - These contracts are generated using `snarkjs` and help verify the zk-proofs on-chain
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
+3. Frontend UI - The frontend UI is responsible for the user interface and the interaction with the user.
 
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
+## Something more about the circuits
 
-```shell
-hardhat run --network ropsten scripts/deploy.js
-```
+There are two circuits:
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
+1. Addition Circuit - This circuit is responsible for checking if two numbers add up to a third number. It takes three signals as input, `a`, `b` and `c` and checks if `c` == `a` + `b`. It is extended to be used for the case of division. Instead of checking if `a` - `b` == `c`, we check if `b` + `c` == `a`.
 
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
+2. Multiplication Circuit - This circuit is responsible for checking if the product of two numbers is a third number. It takes three signals as input, `a`, `b` and `c` and checks if `c` == `a` *`b`.
+It is extended to be used for the case of division. Instead of checking if `a` / `b` == `c`, we check if `b`* `c` == `a`.
+
