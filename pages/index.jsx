@@ -57,8 +57,8 @@ function Home() {
   const { connectAsync, connectors } = useConnect();
   const {
     data: accountData,
-    isError: accountError,
-    isLoading: accountLoading,
+    // isError: accountError,
+    // isLoading: accountLoading,
   } = useAccount();
   const { disconnect } = useDisconnect();
 
@@ -84,7 +84,7 @@ function Home() {
   const [total, setTotal] = React.useState(0);
   const [isCompleted, setIsCompleted] = React.useState(false);
 
-  const [expiryTimestamp, setExpiryTimestamp] = React.useState(0);
+  const [expiryTimestamp] = React.useState(0);
   const {
     seconds, pause, resume, restart, stop,
   } = useTimer({
