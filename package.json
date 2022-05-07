@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "abi": "node scripts/getABIs.js",
     "lint": "eslint src --ext ts --cache",
     "lint:fix": "yarn lint --fix || true"
   },

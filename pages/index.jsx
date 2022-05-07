@@ -13,8 +13,8 @@ import {
 import { useTimer } from 'react-timer-hook';
 import { addCalldata, multiplyCalldata } from '../utils/zk';
 import addresses from '../utils/addresses.json';
-import addVerifier from '../artifacts/contracts/AddVerifier.sol/Verifier.json';
-import multiplyVerifier from '../artifacts/contracts/MultiplyVerifier.sol/Verifier.json';
+import addVerifierABI from '../utils/ABIs/AddVerifier.json';
+import multiplyVerifierABI from '../utils/ABIs/MultiplyVerifier.json';
 
 function Home() {
   const [a, setA] = React.useState(-1);
@@ -70,13 +70,13 @@ function Home() {
 
   const addContract = useContract({
     addressOrName: addresses.addContract,
-    contractInterface: addVerifier.abi,
+    contractInterface: addVerifierABI,
     signerOrProvider: signerData || provider,
   });
 
   const multiplyContract = useContract({
     addressOrName: addresses.multiplyContract,
-    contractInterface: multiplyVerifier.abi,
+    contractInterface: multiplyVerifierABI,
     signerOrProvider: signerData || provider,
   });
 
