@@ -161,7 +161,6 @@ function Home() {
           maxW="35%"
           fontSize="28px"
           lineHeight="40px"
-          fontWeight="600"
           mb={8}
           textAlign="center"
           letterSpacing={0.5}
