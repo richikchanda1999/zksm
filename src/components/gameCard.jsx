@@ -1,6 +1,5 @@
 import {
   Flex, Button, Text, Input, useToast,
-  ToastPositionWithLogical,
 } from '@chakra-ui/react';
 import { useContract, useProvider } from 'wagmi';
 import React from 'react';
