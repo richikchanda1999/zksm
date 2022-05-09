@@ -75,7 +75,7 @@ function LandingCard({
         w="100px"
         h="100px"
         left="65%"
-        top="45%"
+        top="calc(50% - 50px)"
         position="absolute"
         borderRadius="50%"
         onClick={startGame}

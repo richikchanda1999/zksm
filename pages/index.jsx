@@ -10,10 +10,13 @@ function IndexPage() {
   const startGame = () => setGameStarted(true);
   const stopGame = () => setGameStarted(false);
 
+  const maxQuestionCount = 10;
+  const maxTimeLimitInSeconds = 20;
+
   return (
     <Flex
       w="100%"
-      bg="#99704e"
+      bg="#bf8f72"
       h="100vh"
       align="center"
       justify="center"
@@ -25,13 +28,15 @@ function IndexPage() {
           gameStarted={gameStarted}
           startGame={startGame}
           stopGame={stopGame}
+          maxQuestionCount={maxQuestionCount}
+          maxTimeLimitInSeconds={maxTimeLimitInSeconds}
         />
       ) : (
         <LandingCard
           outerContainerRadius={outerContainerRadius}
           startGame={startGame}
-          maxQuestionCount={10}
-          maxTimeLimitInSeconds={15}
+          maxQuestionCount={maxQuestionCount}
+          maxTimeLimitInSeconds={maxTimeLimitInSeconds}
         />
       )}
     </Flex>
