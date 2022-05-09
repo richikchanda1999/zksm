@@ -1,10 +1,8 @@
 import {
   Flex, Button, Text, Input, useToast,
+  ToastPositionWithLogical,
 } from '@chakra-ui/react';
-import {
-  useContract,
-  useProvider,
-} from 'wagmi';
+import { useContract, useProvider } from 'wagmi';
 import React from 'react';
 import { useTimer } from 'react-timer-hook';
 import { addCalldata, multiplyCalldata } from '../../utils/zk';
@@ -96,23 +94,27 @@ function GameCard({
   const toast = useToast();
 
   React.useEffect(() => {
-    if (total === maxQuestionCount || isCompleted) stopGame();
-    if (solved === maxQuestionCount) {
-      toast({
-        title: 'Correct Answer!',
-        description: 'You have solved all the questions!',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        title: 'Alas!',
-        description: "You didn't solve all the questions!",
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
+    if (total === maxQuestionCount || isCompleted) {
+      stopGame();
+      if (solved === maxQuestionCount) {
+        toast({
+          position: 'top',
+          title: 'Correct Answer!',
+          description: 'You have solved all the questions!',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      } else if (total > 0) {
+        toast({
+          position: 'top',
+          title: 'Alas!',
+          description: "You didn't solve all the questions!",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     }
   }, [total, isCompleted]);
 
@@ -125,12 +127,7 @@ function GameCard({
       borderRadius="8px"
       boxShadow="0px 2px 2px 2px #bf8f72"
     >
-      <Text
-        fontSize="24px"
-        fontWeight="700"
-        color="#99704e"
-        textAlign="center"
-      >
+      <Text fontSize="24px" fontWeight="700" color="#99704e" textAlign="center">
         {number}
       </Text>
     </Flex>
@@ -282,17 +279,35 @@ function GameCard({
         borderBottomRightRadius={outerContainerRadius}
         justify="center"
       >
-        <Text textAlign="center" fontSize="24px" fontWeight="700" ml={2} color="#99704e">
+        <Text
+          textAlign="center"
+          fontSize="24px"
+          fontWeight="700"
+          ml={2}
+          color="#99704e"
+        >
           {seconds}
           {' '}
           seconds left
         </Text>
-        <Text textAlign="center" fontSize="24px" fontWeight="700" ml={2} color="#99704e">
+        <Text
+          textAlign="center"
+          fontSize="24px"
+          fontWeight="700"
+          ml={2}
+          color="#99704e"
+        >
           {maxQuestionCount - total}
           {' '}
           questions left
         </Text>
-        <Text textAlign="center" fontSize="24px" fontWeight="700" color={quesResult ? '#00aa84' : (total === 0 ? 'black' : '#f06c64')} ml={2}>
+        <Text
+          textAlign="center"
+          fontSize="24px"
+          fontWeight="700"
+          color={quesResult ? '#00aa84' : total === 0 ? 'black' : '#f06c64'}
+          ml={2}
+        >
           Score:
           {' '}
           {solved}
