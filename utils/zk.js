@@ -1,13 +1,13 @@
-import { groth16 } from "snarkjs";
+import { groth16 } from 'snarkjs';
 
 function unstringifyBigInts(o) {
-  if (typeof o == "string" && /^[0-9]+$/.test(o)) {
+  if (typeof o === 'string' && /^[0-9]+$/.test(o)) {
     return BigInt(o);
-  } else if (typeof o == "string" && /^0x[0-9a-fA-F]+$/.test(o)) {
+  } if (typeof o === 'string' && /^0x[0-9a-fA-F]+$/.test(o)) {
     return BigInt(o);
-  } else if (Array.isArray(o)) {
+  } if (Array.isArray(o)) {
     return o.map(unstringifyBigInts);
-  } else if (typeof o == "object") {
+  } if (typeof o === 'object') {
     if (o === null) return null;
     const res = {};
     const keys = Object.keys(o);
@@ -15,28 +15,27 @@ function unstringifyBigInts(o) {
       res[k] = unstringifyBigInts(o[k]);
     });
     return res;
-  } else {
-    return o;
   }
+  return o;
 }
 
 async function exportCallDataGroth16(input, wasmPath, zkeyPath) {
   const { proof, publicSignals } = await groth16.fullProve(
     input,
     wasmPath,
-    zkeyPath
+    zkeyPath,
   );
 
   const editedPublicSignals = unstringifyBigInts(publicSignals);
   const editedProof = unstringifyBigInts(proof);
   const calldata = await groth16.exportSolidityCallData(
     editedProof,
-    editedPublicSignals
+    editedPublicSignals,
   );
 
   const argv = calldata
-    .replace(/["[\]\s]/g, "")
-    .split(",")
+    .replace(/["[\]\s]/g, '')
+    .split(',')
     .map((x) => BigInt(x).toString());
 
   const a = [argv[0], argv[1]];
@@ -56,7 +55,7 @@ async function exportCallDataGroth16(input, wasmPath, zkeyPath) {
 
 export async function addCalldata(a, b, c) {
   const input = {
-    a, b, c
+    a, b, c,
   };
 
   let dataResult;
@@ -64,8 +63,8 @@ export async function addCalldata(a, b, c) {
   try {
     dataResult = await exportCallDataGroth16(
       input,
-      "/zkUtil/add.wasm",
-      "/zkUtil/add_0001.zkey"
+      '/zkUtil/add.wasm',
+      '/zkUtil/add_0001.zkey',
     );
   } catch (error) {
     return false;
@@ -76,7 +75,7 @@ export async function addCalldata(a, b, c) {
 
 export async function multiplyCalldata(a, b, c) {
   const input = {
-    a, b, c
+    a, b, c,
   };
 
   let dataResult;
@@ -84,8 +83,8 @@ export async function multiplyCalldata(a, b, c) {
   try {
     dataResult = await exportCallDataGroth16(
       input,
-      "/zkUtil/multiply.wasm",
-      "/zkUtil/multiply_0001.zkey"
+      '/zkUtil/multiply.wasm',
+      '/zkUtil/multiply_0001.zkey',
     );
   } catch (error) {
     return false;

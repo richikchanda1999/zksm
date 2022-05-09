@@ -18,6 +18,9 @@
         "react"
     ],
     "rules": {
-        "react/jsx-props-no-spreading": ["off"]
+        "react/jsx-props-no-spreading": ["off"],
+        "no-plusplus": "off",
+        "no-param-reassign": "off",
+        "react/prop-types": "off"
     }
 }
