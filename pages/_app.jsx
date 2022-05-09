@@ -12,7 +12,7 @@ const client = createClient({
     return [new InjectedConnector()];
   },
   provider() {
-    return new providers.JsonRpcProvider('https://api.s0.b.hmny.io/');
+    return new providers.JsonRpcProvider('https://api.harmony.one');
   },
 });
 

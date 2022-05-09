@@ -3,7 +3,7 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-const hre = require("hardhat");
+const hre = require('hardhat');
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -21,19 +21,19 @@ async function main() {
 
   // console.log("Greeter deployed to:", greeter.address);
 
-  // const addVerifier = await hre.ethers.getContractFactory(
-  //   "contracts/AddVerifier.sol:Verifier"
-  // );
-  // const addContract = await addVerifier.deploy();
-  // await addContract.deployed();
-  // console.log("Add Verifier deployed to:", addContract.address);
+  const addVerifier = await hre.ethers.getContractFactory(
+    'contracts/AddVerifier.sol:Verifier',
+  );
+  const addContract = await addVerifier.deploy();
+  await addContract.deployed();
+  console.log('Add Verifier deployed to:', addContract.address);
 
   const multiplyVerifier = await hre.ethers.getContractFactory(
-    "contracts/MultiplyVerifier.sol:Verifier"
+    'contracts/MultiplyVerifier.sol:Verifier',
   );
   const multiplyContract = await multiplyVerifier.deploy();
   await multiplyContract.deployed();
-  console.log("Multiply Verifier deployed to:", multiplyContract.address);
+  console.log('Multiply Verifier deployed to:', multiplyContract.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

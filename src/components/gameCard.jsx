@@ -54,13 +54,13 @@ function GameCard({
   const provider = useProvider();
 
   const addContract = useContract({
-    addressOrName: addresses.addContract,
+    addressOrName: addresses.addContract.mainnet,
     contractInterface: addAbi,
     signerOrProvider: provider,
   });
 
   const multiplyContract = useContract({
-    addressOrName: addresses.multiplyContract,
+    addressOrName: addresses.multiplyContract.mainnet,
     contractInterface: multiplyAbi,
     signerOrProvider: provider,
   });
