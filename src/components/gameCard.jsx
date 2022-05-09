@@ -1,5 +1,5 @@
 import {
-  Flex, Button, Text, Input,
+  Flex, Button, Text, Input, useToast,
 } from '@chakra-ui/react';
 import {
   useContract,
@@ -93,8 +93,27 @@ function GameCard({
     generate();
   }, []);
 
+  const toast = useToast();
+
   React.useEffect(() => {
     if (total === maxQuestionCount || isCompleted) stopGame();
+    if (solved === maxQuestionCount) {
+      toast({
+        title: 'Correct Answer!',
+        description: 'You have solved all the questions!',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: 'Alas!',
+        description: "You didn't solve all the questions!",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   }, [total, isCompleted]);
 
   const getNumberCard = (number) => (
@@ -263,12 +282,12 @@ function GameCard({
         borderBottomRightRadius={outerContainerRadius}
         justify="center"
       >
-        <Text textAlign="center" fontSize="24px" fontWeight="700" ml={2}>
+        <Text textAlign="center" fontSize="24px" fontWeight="700" ml={2} color="#99704e">
           {seconds}
           {' '}
           seconds left
         </Text>
-        <Text textAlign="center" fontSize="24px" fontWeight="700" ml={2}>
+        <Text textAlign="center" fontSize="24px" fontWeight="700" ml={2} color="#99704e">
           {maxQuestionCount - total}
           {' '}
           questions left
